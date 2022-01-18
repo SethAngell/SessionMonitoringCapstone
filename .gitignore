@@ -1,0 +1,10 @@
+# The various env files
+.env
+*/.env
+*/*/.env
+.dev.env
+*/.dev.env
+*/*/.dev.env
+
+# Data stores
+store/volumes/*
