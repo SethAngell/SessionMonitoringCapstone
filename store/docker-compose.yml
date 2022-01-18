@@ -19,7 +19,7 @@ services:
       - ./volumes/data:/var/lib/postgresql/data
       - ./volumes/init:/docker-entrypoint-initdb.d
   pgadmin:
-    container_name: pgadmin4_container
+    container_name: pgadmin
     image: dpage/pgadmin4
     restart: always
     environment:
@@ -29,5 +29,11 @@ services:
     #     - .dev.env
     ports:
       - "5050:80"
+      
+
+networks: 
+  default: 
+    external: 
+      name: capstone-dev-network
 
       

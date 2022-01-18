@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  proxy:
+    build: ./proxy
+    container_name: proxy
+    ports:
+      - 80:80
+      - 8081:443
+
+networks: 
+  default: 
+    external: 
+      name: capstone-dev-network
