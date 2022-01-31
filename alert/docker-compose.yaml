@@ -1,21 +1,11 @@
 version: '3.8'
 
 services:
-  proxy:
-    build: ./proxy
-    container_name: proxy
-    ports:
-      - 80:80
-      - 8081:443
-    depends_on:
-      - alert
-  
   alert:
-    build: ./alert
+    build: .
     container_name: alert
     ports:
       - 5000:5000
-    
 
 networks: 
   default: 

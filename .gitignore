@@ -6,5 +6,10 @@
 */.dev.env
 */*/.dev.env
 
+# The various python VENV containers
+env
+*/env
+*/*/env
+
 # Data stores
 store/volumes/*
