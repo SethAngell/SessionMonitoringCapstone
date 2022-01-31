@@ -29,4 +29,4 @@ Similiary, for this implementing a client, they should expect to format and disp
 In both instances, the only key will be `msg` containing a stylized string which contains the users name and either their message or state change. These are separated into two different events to allow for visual styling within your client.
 
 
-[^headless] : Headless in this context implies outside of a local browser session. Web users interfacing directly with the http://<domain>/v1 endpoint will have their user info stored in the session object. All other clients are expected to pass this information with each message
+[^headless]: Headless in this context implies outside of a local browser session. Web users interfacing directly with the http://<domain>/v1 endpoint will have their user info stored in the session object. All other clients are expected to pass this information with each message
