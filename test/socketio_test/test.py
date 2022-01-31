@@ -36,10 +36,11 @@ def status_update(data):
 @sio.on('message')
 def new_message(data):
 	print(data['msg'])
+	
 	sio.emit('text', {'msg' : 'This is my automated message', 'headless': True, 'name': NAME})
 
 		
-sio.connect('http://10.0.1.86:5000')
+sio.connect('http://db.capstone.com')
 
 try:
 	sio.wait()

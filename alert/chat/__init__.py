@@ -17,7 +17,7 @@ def create_app(test_config=None):
     )
 
     from .main import main as alert_bp
-    app.register_blueprint(alert_bp)#, url_prefix="/alert/v1")
+    app.register_blueprint(alert_bp, url_prefix="/v1")
 
     socketio.init_app(app, engineio_logger=True, logger=True)
 
