@@ -1,5 +1,5 @@
 from flask import session
-from flask_socketio import emit, join_room, leave_room
+from flask_socketio import emit, join_room, leave_room, rooms
 from .. import socketio
 import os
 
@@ -17,41 +17,26 @@ def joined(message):
     debug_print("New member has joined!")
     debug_print(f'{message = }') 
 
-    if 'headless' in message.keys():
-        debug_print('headless message')
-        name = message['name']
-        room = message['room']
-    else:
-        debug_print('browser session')
-        room = session.get('room')
-        name = session.get('name')
+    name = message['name']
+    room = message['room']
 
     join_room(room)
-    emit('status', {'msg' : f'{name.upper()} has joined the chat!'}, broadcast=True)
+    emit('status', {'state' : "joined", 'name': name}, to=rooms())
 
 @socketio.on('text')
 def text(message):
 
     debug_print("New message! - " + str(message))
-    try:
-        debug_print("Went looking for a name in session")
-        name = session.get('name')
-    except:
-        debug_print("Went looking for a name in message")
-        name = message['name']
 
+    name = message['name']
     msg = message['msg']
-    emit('message', {'msg' : f'{name.upper()}: {msg}'}, broadcast=True)
+    emit('message', {'msg' : msg, 'name': name}, to=rooms())
 
 @socketio.on('left')
 def left(message):
     debug_print("A member has left the chat")
 
-    try:
-        debug_print("Went looking for a name in session")
-        name = session.get('name')
-    except:
-        debug_print("Went looking for a name in message")
-        name = message['name']
+    debug_print("Went looking for a name in message")
+    name = message['name']
 
-    emit('status', {'msg': f'{name.upper()} has left the chat :('}, broadcast = True)
+    emit('status', {'state': 'left', 'name': name}, to=rooms())
