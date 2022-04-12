@@ -1,4 +1,4 @@
-FROM python:3.9.5-slim-buster
+FROM node:17
 
 WORKDIR /usr/src/app
 
@@ -9,10 +9,9 @@ RUN apt-get update \
   && apt-get -y install gcc vim ffmpeg libsm6 libxext6 \
   && apt-get clean
 
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./WebApp /usr/src/app
 
-COPY . .
+RUN npm install 
+RUN npm run build
 
-ENTRYPOINT python test.py
+ENTRYPOINT npm run start -- -w

@@ -1,5 +1,0 @@
-aiohttp
-aiortc
-av
-opencv-python
-aiohttp_cors
