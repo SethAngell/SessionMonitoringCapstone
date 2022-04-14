@@ -142,6 +142,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ==================================================
 # New Content
 
+REST_FRAMEWORK = {
+   "DEFAULT_PERMISSION_CLASSES": [
+         'rest_framework.permissions.AllowAny',
+    ]
+}
+
 AUTH_USER_MODEL = "users.CustomUser"
 
 SITE_ID = 1

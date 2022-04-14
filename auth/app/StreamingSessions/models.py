@@ -34,7 +34,7 @@ class ProjectAPIKey(AbstractAPIKey):
 
 class Session(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
-    conclusion_date = models.DateTimeField()
+    conclusion_date = models.DateTimeField(blank=True, null=True)
     triggering_api_key = models.ForeignKey(ProjectAPIKey, on_delete=models.DO_NOTHING) # The API Key associated with the first device to connect
     session_room = models.CharField(max_length=73)
 
@@ -69,11 +69,13 @@ class ActiveProjects(models.Model):
     )
     session = models.ForeignKey(
         Session,
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True
     )
 
     def __str__(self):
-        return self.project
+        return str(self.project)
 
 
 

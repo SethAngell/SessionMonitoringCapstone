@@ -12,7 +12,13 @@ def generate_new_session(api_key):
     
 
 def check_if_active_session_exists(api_key):
-    return api_key.project in ActiveProjects.objects.values_list("project")
+    obj_list = ActiveProjects.objects.values_list("project", flat=True)
+    obj_list = Project.objects.filter(id__in=set(obj_list))
+
+    print(f'{obj_list = }')
+
+    print(f'{api_key.project = }')
+    return api_key.project in obj_list
        
 
 
