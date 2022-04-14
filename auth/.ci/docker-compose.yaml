@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  session_monitoring_auth:
+    build: 
+      context: ../app
+      dockerfile: Dockerfile.prod
+    container_name: session_monitoring_auth
+    command: >
+      sh -c "python manage.py makemigrations &&
+            python manage.py runserver 0.0.0.0:8000"
+    volumes: 
+      - ../app/:/usr/src/app/
+    ports:
+      - 8009:8000
+      - 8001:8001
