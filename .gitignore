@@ -14,3 +14,6 @@ env
 
 # Data stores
 store/volumes/*
+
+stream/WebApp/build
+stream/WebApp/node_modules

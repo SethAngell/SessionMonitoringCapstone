@@ -1,9 +1,47 @@
 import { Receiver } from "./receiver.js";
 import { getServerConfig } from "../../js/config.js";
 
-setup();
+//setup();
+let container = null;
+let api_key_field = null;
+let api_key = null;
 
+on_start();
 
+function on_start() {
+  container = document.getElementById("content-container");
+  api_key_field = document.getElementById("api-key")
+}
+
+function get_api_key() {
+  api_key = api_key_field.value;
+  console.log(api_key);
+}
+
+function check_api_key() {
+  get_api_key();
+
+  if (api_key === null) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function attempt_login() {
+  if (check_api_key()) {
+    container.innerHTML = '';
+    console.log(`API Key After container nuke: ${api_key}`);
+    spawn_chatbox();
+    after_login();
+  } else {
+    alert("Make sure you enter an API key!");
+  }
+}
+
+function after_login() {
+  setup();
+}
 
 let playButton;
 let receiver;
@@ -121,7 +159,7 @@ function clearChildren(element) {
 }
 
 function spawn_chatbox(container, name, room) { 
-  var chat_box_html = `
+  var video_player_html = `
   <div id="container" class="container-fluid d-flex justify-content-center">
     <div id="display-card" class="card w-50">
       <div class="card-header">
@@ -143,6 +181,9 @@ function spawn_chatbox(container, name, room) {
     </div>
   </div>
   `
-  container.innerHTML = chat_box_html
+  container.innerHTML = video_player_html;
 }
 
+function login() {
+  alert("Atta Boy! You logged in!");
+}

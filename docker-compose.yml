@@ -40,10 +40,20 @@ services:
       context: ./auth/app
       dockerfile: Dockerfile.prod
       args:
-        DJANGO_SECRET_KEY:
+        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
     restart: always
+    env_file: ./envs/auth.env
     ports:
       - "8001:8001"
+
+  stream:
+    build: 
+      context: ./stream
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    hostname: stream
+    ports:
+      - 8080:8080
 
 volumes:
   store_data:
