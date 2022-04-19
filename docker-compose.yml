@@ -17,6 +17,36 @@ services:
     container_name: alert
     ports:
       - 5000:5000
+
+  store:
+    image: postgres
+    container_name: store
+    hostname: db
+    env_file: ./envs/store.env
+    volumes:
+      - store_data:/var/lib/postgresql/data
+
+  store_interface:
+    container_name: store_interface
+    image: dpage/pgadmin4
+    restart: always
+    env_file: ./envs/store_interface.env
+    ports:
+      - "5050:80"
+
+  auth:
+    container_name: auth
+    build:
+      context: ./auth/app
+      dockerfile: Dockerfile.prod
+      args:
+        DJANGO_SECRET_KEY:
+    restart: always
+    ports:
+      - "8001:8001"
+
+volumes:
+  store_data:
     
 
 networks: 

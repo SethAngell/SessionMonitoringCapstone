@@ -5,6 +5,7 @@
 .dev.env
 */.dev.env
 */*/.dev.env
+envs/*.env
 
 # The various python VENV containers
 env

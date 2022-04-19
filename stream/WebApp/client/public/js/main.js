@@ -3,6 +3,8 @@ import { getServerConfig } from "../../js/config.js";
 
 setup();
 
+
+
 let playButton;
 let receiver;
 let useWebSocket;
@@ -117,3 +119,30 @@ function clearChildren(element) {
     element.removeChild(element.firstChild);
   }
 }
+
+function spawn_chatbox(container, name, room) { 
+  var chat_box_html = `
+  <div id="container" class="container-fluid d-flex justify-content-center">
+    <div id="display-card" class="card w-50">
+      <div class="card-header">
+        Current Session
+      </div>
+      <div class="card-body">
+        
+        <h5 class="card-title">Current Session: </h5>
+
+        <div id="warning" hidden=true></div>
+
+        <div id="player"></div>
+      
+      </div>
+      <div class="card-footer text-muted">
+        Based on source code from <a href="https://github.com/Unity-Technologies/UnityRenderStreaming">Unity-Technologies</a>. 
+        Modified in compliance with the <a href="https://unity3d.com/legal/licenses/Unity_Companion_License">Unity Companion License</a>        
+      </div>
+    </div>
+  </div>
+  `
+  container.innerHTML = chat_box_html
+}
+
