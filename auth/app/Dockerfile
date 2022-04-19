@@ -7,7 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
-  && apt-get -y install gcc postgresql vim \
+  && apt-get -y install gcc libpq-dev postgresql vim \
   && apt-get clean
 
 # Handle all necessary dependencies

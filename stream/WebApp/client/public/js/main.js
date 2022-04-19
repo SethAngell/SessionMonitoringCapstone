@@ -5,12 +5,38 @@ import { getServerConfig } from "../../js/config.js";
 let container = null;
 let api_key_field = null;
 let api_key = null;
+let session_room_name = null;
+let session_id = null;
+let dev = null;
+let session_room_url = null;
+let health_check_url = null;
+
 
 on_start();
 
 function on_start() {
   container = document.getElementById("content-container");
-  api_key_field = document.getElementById("api-key")
+  api_key_field = document.getElementById("api-key");
+
+  var current_url = window.location.href;
+
+  // https://stackoverflow.com/a/5582621
+  let dev_hosts = ["localhost", "stream.capstone.com"];
+  if (dev_hosts.some(v => current_url.includes(v))) {
+    dev = true;
+  }
+  else {
+    dev = false;
+  }
+
+  if (dev) {
+    let session_room_url = 'http://auth.capstone.com/api/v1/auth/get-session-room/';
+    let health_check_url = 'http://auth.capstone.com/api/v1/auth/ping/';
+  }
+  else {
+    alert("No URLS for prod mode :(");
+  }
+
 }
 
 function get_api_key() {
@@ -21,7 +47,7 @@ function get_api_key() {
 function check_api_key() {
   get_api_key();
 
-  if (api_key === null) {
+  if (api_key === "") {
     return false;
   } else {
     return true;
@@ -30,14 +56,46 @@ function check_api_key() {
 
 function attempt_login() {
   if (check_api_key()) {
+    retrieve_session_id()
+      .then(data => {
+        console.log(data);
+        session_room_name = data["RoomName"];
+        session_id = data["SessionID"];
+      });
     container.innerHTML = '';
     console.log(`API Key After container nuke: ${api_key}`);
-    spawn_chatbox();
+    
+    spawn_chatbox(container, session_room_name);
     after_login();
   } else {
     alert("Make sure you enter an API key!");
   }
 }
+
+
+
+async function retrieve_session_id() {
+  const response = await fetch(session_room_url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Api-Key ${api_key}`
+    },
+  });
+  return response.json()
+}
+
+async function start_health_check(interval) {
+  const response = await fetch(health_check_url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Api-Key ${api_key}`
+    },
+    body: JSON.stringify({"SessionID": session_id}),
+  });
+  return response.json()
+}
+
+window.attempt_login = attempt_login;
 
 function after_login() {
   setup();
@@ -158,7 +216,7 @@ function clearChildren(element) {
   }
 }
 
-function spawn_chatbox(container, name, room) { 
+function spawn_chatbox(container, room) { 
   var video_player_html = `
   <div id="container" class="container-fluid d-flex justify-content-center">
     <div id="display-card" class="card w-50">
@@ -167,11 +225,16 @@ function spawn_chatbox(container, name, room) {
       </div>
       <div class="card-body">
         
-        <h5 class="card-title">Current Session: </h5>
+        <h5 class="card-title">Room ID: ${room}</h5>
 
         <div id="warning" hidden=true></div>
 
         <div id="player"></div>
+        
+        <div id="chat-input" class="input-group mb-3 mt-3">
+          <input type="text" class="form-control" id="chat-input-box" placeholder="New Message" aria-label="Recipient's username" aria-describedby="from-label">
+          <button class="btn btn-outline-success" type="button" id="send-button" onclick="send_message()">Send Alert</button>
+        </div>
       
       </div>
       <div class="card-footer text-muted">
@@ -182,8 +245,4 @@ function spawn_chatbox(container, name, room) {
   </div>
   `
   container.innerHTML = video_player_html;
-}
-
-function login() {
-  alert("Atta Boy! You logged in!");
 }

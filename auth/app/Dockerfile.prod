@@ -1,17 +1,28 @@
 FROM python:3.9.5-slim-buster
 
 ARG DJANGO_SECRET_KEY
+ARG DB_NAME
+ARG DB_HOST
+ARG DB_USER
+ARG DB_PASS 
 
 ENV DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY}
+ENV DB_NAME ${DB_NAME}
+ENV DB_HOST ${DB_HOST}
+ENV DB_USER ${DB_USER}
+ENV DB_PASS ${DB_PASS}
 
 # Set working directory for all following in container commands
 WORKDIR /usr/src/app
+
+ENV ALLOWED_HOSTS "auth.capstone.com localhost"
+ENV DB_ENGINE django.db.backends.postgresql_psycopg2
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
-  && apt-get -y install gcc postgresql vim \
+  && apt-get -y install gcc postgresql libpq-dev vim \
   && apt-get clean
 
 # Handle all necessary dependencies
@@ -23,12 +34,6 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # collect static files
-RUN python manage.py collectstatic --noinput
-RUN python manage.py migrate
+RUN chmod +x deploy.sh
 
-# add and run as non-root user
-RUN adduser --disabled-password myuser
-USER myuser
-
-# run gunicorn
-CMD gunicorn SessionMonitoringAuth.wsgi:application --bind 0.0.0.0:8001
+ENTRYPOINT sh deploy.sh
