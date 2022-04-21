@@ -15,7 +15,7 @@ ENV DB_PASS ${DB_PASS}
 # Set working directory for all following in container commands
 WORKDIR /usr/src/app
 
-ENV ALLOWED_HOSTS "auth.capstone.com localhost"
+ENV ALLOWED_HOSTS "auth.capstone.com localhost auth.capstone.doublel.studio"
 ENV DB_ENGINE django.db.backends.postgresql_psycopg2
 
 ENV PYTHONDONTWRITEBYTECODE 1
