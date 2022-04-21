@@ -31,6 +31,8 @@ class RoomRetrievalView(APIView):
             "SessionID" : session.id
         }
 
+        new_health_check = HealthCheck.objects.create(related_api_key=api_key, session_room=session)
+
         return Response(json.dumps(session_to_return), status.HTTP_200_OK)
 
 # Endpoint for ping healthchecks
