@@ -14,7 +14,12 @@ function leave_room() {
 }
 
 function open_socket(_name, _room) {
-    socket = io.connect('http://alert.capstone.com');
+
+    if (window.location.href.includes('doublel')) {
+        socket = io.connect("http://alert.capstone.doublel.studio")
+    } else {
+        socket = io.connect('http://alert.capstone.com');
+    }
     
     socket.on('connect', function() {
         socket.emit('joined', {

@@ -13,6 +13,7 @@ services:
       - ../proxy/srv/:/srv/
     depends_on:
       - alert
+      - auth
   
   alert:
     build: ../alert
