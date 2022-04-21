@@ -34,7 +34,8 @@ function on_start() {
     let health_check_url = 'http://auth.capstone.com/api/v1/auth/ping/';
   }
   else {
-    alert("No URLS for prod mode :(");
+    let session_room_url = 'http://auth.capstone.doublel.studio/api/v1/auth/get-session-room/';
+    let health_check_url = 'http://auth.capstone.doublel.studio/api/v1/auth/ping/';
   }
 
 }
