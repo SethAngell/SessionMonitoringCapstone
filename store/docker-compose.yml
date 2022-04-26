@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: supabase-db
+    hostname: db
+    image: supabase/postgres:14.1.0
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    restart: unless-stopped
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # env_file:
+    #   - .dev.env
+    volumes:
+      - ./volumes/data:/var/lib/postgresql/data
+      - ./volumes/init:/docker-entrypoint-initdb.d
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    # env_file:
+    #     - .dev.env
+    ports:
+      - "5050:80"
+      
+
+networks: 
+  default: 
+    external: 
+      name: capstone-dev-network
+
+      

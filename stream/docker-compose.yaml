@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  stream:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    ports:
+      - 80:8080

@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  proxy:
+    build: 
+      context: ../proxy
+      dockerfile: Dockerfile.prod
+    container_name: proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ../proxy/srv/:/srv/
+    depends_on:
+      - alert
+      - auth
+  
+  alert:
+    build: ../alert
+    container_name: alert
+    ports:
+      - 5000:5000
+
+  store:
+    image: postgres
+    container_name: store
+    hostname: store
+    env_file: ../envs/store.env
+    volumes:
+      - store_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  store_interface:
+    container_name: store_interface
+    image: dpage/pgadmin4
+    restart: always
+    env_file: ../envs/store_interface.env
+    ports:
+      - "5050:80"
+
+  auth:
+    container_name: auth
+    hostname: auth
+    build:
+      context: ../auth/app
+      dockerfile: Dockerfile.prod
+      args:
+        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+        DB_NAME: $DB_NAME
+        DB_HOST: $DB_HOST
+        DB_USER: $DB_USER
+        DB_PASS: $DB_PASS
+    restart: always
+    depends_on: 
+      store:
+        condition: service_healthy
+    env_file: ../envs/auth.env
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: curl --fail http://auth.capstone.com || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+
+  stream:
+    build: 
+      context: ../stream
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    hostname: stream
+    ports:
+      - 8080:8080
+
+volumes:
+  store_data:
+    
+
+networks: 
+  default: 
+    external: 
+      name: capstone-dev-network

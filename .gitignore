@@ -1,0 +1,20 @@
+# The various env files
+.env
+*/.env
+*/*/.env
+.dev.env
+*/.dev.env
+*/*/.dev.env
+envs/*.env
+
+# The various python VENV containers
+env
+*/env
+*/*/env
+
+# Data stores
+store/volumes/*
+
+stream/WebApp/build
+stream/WebApp/node_modules
+stream/node_modules
