@@ -68,11 +68,13 @@ services:
   stream:
     build: 
       context: ./stream
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     container_name: stream
     hostname: stream
     ports:
       - 8080:8080
+    volumes:
+      - ./stream/WebApp/client/public:/usr/src/app/client/public
 
 volumes:
   store_data:

@@ -19,6 +19,6 @@ def create_app(test_config=None):
     from .main import main as alert_bp
     app.register_blueprint(alert_bp, url_prefix="/v1")
 
-    socketio.init_app(app, engineio_logger=True, logger=True, cors_allowed_origins=["http://chat.capstone.com", "http://chat.capstone.doublel.studio"])
+    socketio.init_app(app, engineio_logger=True, logger=True, cors_allowed_origins=["http://chat.capstone.com", "http://chat.capstone.doublel.studio", "http://stream.capstone.com", "http://stream.capstone.doublel.studio"])
 
     return app

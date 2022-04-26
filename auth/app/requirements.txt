@@ -24,3 +24,4 @@ djangorestframework-api-key==2.*
 schedule
 psycopg2-binary==2.8.5
 whitenoise
+django-cors-headers

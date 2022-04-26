@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "rest_auth.registration",
     "rest_framework_api_key",
+    'corsheaders',
     # Project Apps
     "users",
     "api",
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -153,6 +155,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ==================================================
 # New Content
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost',
+    'http://stream.capstone.com',
+    'http://stream.capstone.doublel.studio'
+]
+
 REST_FRAMEWORK = {
    "DEFAULT_PERMISSION_CLASSES": [
          'rest_framework.permissions.AllowAny',
@@ -190,3 +198,24 @@ if DEBUG == False:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}

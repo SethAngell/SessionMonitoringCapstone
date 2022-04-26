@@ -14,4 +14,4 @@ COPY ./WebApp /usr/src/app
 RUN npm install 
 RUN npm run build
 
-ENTRYPOINT npm run start -- -w
+ENTRYPOINT npm run dev -- -w -p 8080
