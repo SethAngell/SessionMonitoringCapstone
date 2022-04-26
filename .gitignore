@@ -18,3 +18,5 @@ store/volumes/*
 stream/WebApp/build
 stream/WebApp/node_modules
 stream/node_modules
+
+.cache
