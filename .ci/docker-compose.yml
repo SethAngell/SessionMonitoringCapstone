@@ -81,37 +81,41 @@ services:
     build: 
       context: ../stream
       dockerfile: Dockerfile.prod
+    command: ["10001"]
     container_name: stream
     hostname: luke.stream
     ports:
-      - 8080:8080
+      - 10001:10001
 
   leia.stream:
     build: 
       context: ../stream
       dockerfile: Dockerfile.prod
+    command: ["10002"]
     container_name: stream
     hostname: leia.stream
     ports:
-      - 8080:8080
+      - 10002:10002
 
   han.stream:
     build: 
       context: ../stream
       dockerfile: Dockerfile.prod
+    command: ["10003"]
     container_name: stream
     hostname: han.stream
     ports:
-      - 8080:8080
+      - 10003:10003
 
-chewie.stream:
+  chewie.stream:
     build: 
       context: ../stream
       dockerfile: Dockerfile.prod
+    command: ["10004"]
     container_name: stream
     hostname: chewie.stream
     ports:
-      - 8080:8080
+      - 10004:10004
 
 
 volumes:
