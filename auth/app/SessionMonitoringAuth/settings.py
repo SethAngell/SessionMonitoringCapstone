@@ -155,10 +155,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ==================================================
 # New Content
 
+# Theres a REGEX version of this which would make this more dynamic
 CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     'http://stream.capstone.com',
-    'http://stream.capstone.doublel.studio'
+    'http://stream.capstone.doublel.studio',
+    'http://luke.stream.capstone.doublel.studio',
+    'http://leia.stream.capstone.doublel.studio',
+    'http://han.stream.capstone.doublel.studio',
+    'http://chewie.stream.capstone.doublel.studio',
 ]
 
 REST_FRAMEWORK = {
