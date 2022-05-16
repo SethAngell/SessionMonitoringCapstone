@@ -82,7 +82,7 @@ services:
       context: ../stream
       dockerfile: Dockerfile.prod
     command: ["10001"]
-    container_name: stream
+    container_name: luke.stream
     hostname: luke.stream
     ports:
       - 10001:10001
@@ -92,7 +92,7 @@ services:
       context: ../stream
       dockerfile: Dockerfile.prod
     command: ["10002"]
-    container_name: stream
+    container_name: leia.stream
     hostname: leia.stream
     ports:
       - 10002:10002
@@ -102,7 +102,7 @@ services:
       context: ../stream
       dockerfile: Dockerfile.prod
     command: ["10003"]
-    container_name: stream
+    container_name: han.stream
     hostname: han.stream
     ports:
       - 10003:10003
@@ -112,7 +112,7 @@ services:
       context: ../stream
       dockerfile: Dockerfile.prod
     command: ["10004"]
-    container_name: stream
+    container_name: chewie.stream
     hostname: chewie.stream
     ports:
       - 10004:10004
