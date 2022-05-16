@@ -1,0 +1,17 @@
+class TASK_RESULTS() {
+	string task_Status;
+	string task_id;
+	string task_results;
+}
+
+// Make WEb Reqquest
+(bool, string) results = your_web_Request_function(the_url);
+
+
+TASK_RESULTS tr = JsonUtility.FromJson<TASK_RESULTS>(results.Item2));
+if (tr.task_status == "SUCCESS") {
+	ClassifedText CT = JsonUtility.FromJson<ClassifiedText>(tr.task_results));
+} else {
+	// Make web request again
+}
+

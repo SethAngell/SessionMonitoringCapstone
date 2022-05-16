@@ -77,6 +77,43 @@ services:
     ports:
       - 8080:8080
 
+  luke.stream:
+    build: 
+      context: ../stream
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    hostname: luke.stream
+    ports:
+      - 8080:8080
+
+  leia.stream:
+    build: 
+      context: ../stream
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    hostname: leia.stream
+    ports:
+      - 8080:8080
+
+  han.stream:
+    build: 
+      context: ../stream
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    hostname: han.stream
+    ports:
+      - 8080:8080
+
+chewie.stream:
+    build: 
+      context: ../stream
+      dockerfile: Dockerfile.prod
+    container_name: stream
+    hostname: chewie.stream
+    ports:
+      - 8080:8080
+
+
 volumes:
   store_data:
     
