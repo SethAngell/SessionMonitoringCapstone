@@ -164,6 +164,11 @@ CORS_ALLOWED_ORIGINS = [
     'http://leia.stream.capstone.doublel.studio',
     'http://han.stream.capstone.doublel.studio',
     'http://chewie.stream.capstone.doublel.studio',
+    'http://sam.stream.capstone.doublel.studio',
+    'http://frank.stream.capstone.doublel.studio',
+    'http://tony.stream.capstone.doublel.studio',
+    'http://eddie.stream.capstone.doublel.studio',
+    
 ]
 
 REST_FRAMEWORK = {
